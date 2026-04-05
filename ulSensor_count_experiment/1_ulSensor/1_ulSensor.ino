@@ -1,7 +1,6 @@
 // 센서 1개: 전면
 
 #include <Servo.h>
-#include <SoftwareSerial.h>
 
 #define TRIG_F 13
 #define ECHO_F 12
@@ -12,15 +11,14 @@
 #define MOTOR_B_a 5
 #define MOTOR_B_b 6
 
-// 속도 
+// 속도
 #define SPEED_R 115
 #define SPEED_L 130
 
-SoftwareSerial bluetooth(2, 4);
 Servo myServo;
 float lastDist = 100;
 
-// 카운트 
+// 카운트
 int obstacleCount = 0;
 const int MAX_COUNT = 30;
 
@@ -36,11 +34,11 @@ void setup() {
   delay(1000);
   myServo.detach();
 
-  bluetooth.begin(9600);
+  Serial.begin(9600);
 
   while (true) {
-    if (bluetooth.available()) {
-      char c = bluetooth.read();
+    if (Serial.available()) {
+      char c = Serial.read();
       if (c == 'S' || c == 's') break;
     }
   }
@@ -75,25 +73,25 @@ void loop() {
     myServo.detach();
 
     if (distLeft >= distRight) {
-      bluetooth.print(t); bluetooth.print(",");
-      bluetooth.print(dist); bluetooth.print(",");
-      bluetooth.print(distLeft); bluetooth.print(",");
-      bluetooth.print(distRight); bluetooth.print(",");
-      bluetooth.println("LEFT,OBSTACLE");
+      Serial.print(t); Serial.print(",");
+      Serial.print(dist); Serial.print(",");
+      Serial.print(distLeft); Serial.print(",");
+      Serial.print(distRight); Serial.print(",");
+      Serial.println("LEFT,OBSTACLE");
       turnRight(); delay(700); stopMotors();
     } else {
-      bluetooth.print(t); bluetooth.print(",");
-      bluetooth.print(dist); bluetooth.print(",");
-      bluetooth.print(distLeft); bluetooth.print(",");
-      bluetooth.print(distRight); bluetooth.print(",");
-      bluetooth.println("RIGHT,OBSTACLE");
+      Serial.print(t); Serial.print(",");
+      Serial.print(dist); Serial.print(",");
+      Serial.print(distLeft); Serial.print(",");
+      Serial.print(distRight); Serial.print(",");
+      Serial.println("RIGHT,OBSTACLE");
       turnLeft(); delay(700); stopMotors();
     }
 
   } else {
-    bluetooth.print(t); bluetooth.print(",");
-    bluetooth.print(dist); bluetooth.print(",");
-    bluetooth.println("-1,-1,-1,DRIVING");
+    Serial.print(t); Serial.print(",");
+    Serial.print(dist); Serial.print(",");
+    Serial.println("-1,-1,-1,DRIVING");
     moveForward();
   }
 
