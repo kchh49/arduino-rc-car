@@ -7,7 +7,7 @@ matplotlib.rcParams['font.family'] = 'Malgun Gothic'
 matplotlib.rcParams['axes.unicode_minus'] = False
 
 # 설정
-PORT          = 'COM4'
+PORT          = 'COM(포트번호변경)'
 BAUD_RATE     = 9600
 MAX_OBSTACLES = 30
 CSV_FILENAME  = '(파일명 변경).csv'
